@@ -1273,7 +1273,7 @@ function stopCallWaitSound() { if (callWaitInterval) { clearInterval(callWaitInt
 
 // ---------- Service Worker & Wake Lock ----------
 if ('serviceWorker' in navigator) {
-    const swCode = `self.addEventListener('install', e => self.skipWaiting());self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));self.addEventListener('fetch', e => { const url = new URL(e.request.url); if (url.pathname.endsWith('.js') || url.pathname.endsWith('.html') || url.pathname === '/') { e.respondWith(fetch(e.request, { cache: 'no-cache' })); } else { e.respondWith(fetch(e.request).catch(() => caches.match(e.request))); } });`;
+    const swCode = `self.addEventListener('install', e => self.skipWaiting());self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));`;
     const blob = new Blob([swCode], { type: 'application/javascript' });
     navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
 }
