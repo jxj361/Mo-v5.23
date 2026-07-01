@@ -31,7 +31,9 @@ function sendMessage(text, image = null) {
     }
     markDataChanged();
     scheduleReply(currentChatId, getContact(currentChatId));
-    input.innerHTML = ''; input.placeholder = '输入消息...'; input.focus();
+    input.innerHTML = ''; input.placeholder = '输入消息...';
+// 修复键盘闪烁：保持焦点但不滚动页面
+input.focus({ preventScroll: true });
 }
 
 function getMsgKey(msg) {
